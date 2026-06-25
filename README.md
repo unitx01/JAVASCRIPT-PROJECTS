@@ -1,1 +1,1 @@
-# Project from the Javascript course!
+# Projects from the Javascript course!

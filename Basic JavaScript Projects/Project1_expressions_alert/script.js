@@ -4,6 +4,6 @@ var Sents = Sent1 + " " + Sent2; // combines sent1 and sent2 while spacing them
 var math = (2+2); // simple function displaying the result of 2+2
 
 
-window.alert(Sent1);
-window.alert(math);
-document.write(Sents);
+window.alert(Sent1); //Pops the window alert with Sent1
+window.alert(math);//Pops the window alert with the result of the math function
+document.write(Sents);//Pops the window alert with Sent1 + Sent2

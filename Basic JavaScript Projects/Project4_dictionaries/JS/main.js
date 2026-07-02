@@ -1,4 +1,4 @@
-function my_Dictionary() {
+function fender_telecaster() { 
     var Instrument = {
         Brand:"Fender",
         Color:"Black",
@@ -7,5 +7,9 @@ function my_Dictionary() {
         Type:"Electric Guitar"
     };
     
-    document.getElementById("Dictionary").innerHTML = Instrument.Model;
+    document.getElementById("Model").innerHTML = Instrument.Model;
+    document.getElementById("Brand").innerHTML = Instrument.Brand;
+    document.getElementById("Color").innerHTML = Instrument.Color;
+    document.getElementById("Year").innerHTML = Instrument.Year;
+    document.getElementById("Type").innerHTML = Instrument.Type;
 }

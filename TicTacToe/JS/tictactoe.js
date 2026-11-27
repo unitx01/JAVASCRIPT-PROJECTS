@@ -1,3 +1,5 @@
+//Prevents additional moves once the game is over.
+let gameOver = false;
 //This variable keeps track of whose turn it is.
 let activePlayer = 'X';
 //This array stores an array of moves. We use this to determine win conditions.
@@ -5,6 +7,10 @@ let selectedSquares = [];
 
 //This function is for placing an x or o in a square.
 function placeXOrO(squareNumber) {
+    
+    //Makes it so no futher moves once the game is over.
+    if (gameOver) return false;
+    
     //This condition ensures a square hasn't been selected already.
     //The .some() method is used to check each element of the selectSquare array
     //to see if it contains the square number clicked on.
@@ -24,6 +30,8 @@ function placeXOrO(squareNumber) {
         selectedSquares.push(squareNumber + activePlayer);
         //This calls a function to check for any win conditions.
         checkWinConditions();
+        //Prevents the game from continuing to switch players after someone has won. 
+        if (gameOver) return true;
         //This condition is for changing the active player.
         if (activePlayer === 'X') {
             //If active player is 'X' change it to 'O'.
@@ -57,8 +65,6 @@ function placeXOrO(squareNumber) {
             pickASquare = String(Math.floor(Math.random() * 9));
             //If the random number evaluated returns true, the square hasn't been selected yet.
             if (placeXOrO(pickASquare)) {
-                //This line calls the function.
-                placeXOrO(pickASquare);
                 //This changes our boolean and ends the loop.
                 success = true;
             };
@@ -104,6 +110,8 @@ function checkWinConditions() {
     //This condition checks for a tie. If none of the above conditions are met and
     //9 squares are selected the code executes.
     else if (selectedSquares.length >= 9) {
+        //ensures the additional moves can be made while the game is waiting to reset after a draw.
+        gameOver = true;
         //This function plays the tie game sound.
         audio('./media/tie.mp3');
         //This function sets a .3 second timer before the resetGame is called.
@@ -141,6 +149,8 @@ function audio(audioURL) {
 
 //This function utilizes HTML canvas to draw win lines.
 function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
+
+    gameOver = true;
     //This line accesses our HTML canvas element.
     const canvas = document.getElementById('win-lines');
     //This line gives us access to methods and properties to use on canvas.
@@ -204,6 +214,9 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
         //This line stops our animation loop.
         cancelAnimationFrame(animationLoop);
     }
+
+    //
+    gameOver = true;
     //This line disallows clicking while the win sound is playing
     disableClick();
     //this line plays the win sounds.
@@ -216,12 +229,17 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
 
 //This function resets the game in the event of a tie or a win.
 function resetGame(){
+    //resets the gameOver variable
+    gameOver = false;
+
+    //Ensures that every time the game starts with an X
+    activePlayer = 'X';
     //This for loop iterates through each HTML sqaure element.
     for (let i = 0; i < 9; i++){
         //This variable gets the HTML element i.
-        let sqaure = document.getElementById(String(i));
+        let square = document.getElementById(String(i));
         //This removes our elements backgroundImage.
-        sqaure.style.backgroundimage = "";
+        square.style.backgroundImage = "";
     }
     //This resets out array so it is empty and we can start over.
     selectedSquares = [];
